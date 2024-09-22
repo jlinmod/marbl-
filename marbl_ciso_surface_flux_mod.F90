@@ -77,16 +77,16 @@ contains
 
     real (r8), dimension(num_elements) :: &
          eps_aq_g_surf,                   & ! equilibrium fractionation (CO2_gaseous <-> CO2_aq)
-         alpha_aq_g_surf,                 & ! alpha_xxx_g_surf => eps = ( alpa -1 ) * 1000
+         alpha_aq_g_surf,                 & ! alpha_xxx_g_surf => eps = ( alpha -1 ) * 1000
          eps_dic_g_surf,                  & ! equilibrium fractionation between total DIC and gaseous CO2
-         alpha_dic_g_surf,                & ! alpha_xxx_g_surf => eps = ( alpa -1 ) * 1000
+         alpha_dic_g_surf,                & ! alpha_xxx_g_surf => eps = ( alpha -1 ) * 1000
          frac_co3,                        & ! carbonate fraction fCO3 = [CO3--]/DIC
          alpha_aq_g_surf_14c,             & ! for 14C, with fractionation being twice as large for 14C than for 13C
          alpha_dic_g_surf_14c               ! for 14C, with fractionation being twice as large for 14C than for 13C
 
     ! local parameters for 13C, Zhang et al, 1995, Geochim. et Cosmochim. Acta, 59 (1), 107-114
     real(r8) ::            &
-         alpha_k,          & ! eps = ( alpa -1 ) * 1000
+         alpha_k,          & ! eps = ( alpha -1 ) * 1000
          alpha_k_14c         ! for 14C, with fractionation being twice as large for 14C than for 13C
 
     ! kinetic fraction during gas transfer (per mil) (air-sea CO2 exchange)
@@ -149,8 +149,10 @@ contains
     end where
 
     !-----------------------------------------------------------------------
-    !     individal discrimination factor of each species with respect to
-    !     gaseous CO2, temperature dependent, based on Zhang et al. 95
+    !     individual discrimination factor of each species with respect to
+    !     gaseous CO2, temperature dependent, based on Zhang et al. 1995
+    !     Note: there is a descripeancy between the figure caption and the abstract of the paper,
+    !     the typo is in the abstract, no negative 0.0049
     !-----------------------------------------------------------------------
     eps_aq_g_surf(:)   = 0.0049_r8 * sst(:) - 1.31_r8
 
@@ -160,7 +162,7 @@ contains
     !-----------------------------------------------------------------------
     !     function of T and carbonate fraction (frac_co3)
     !     based on the empirical relationship from the measured
-    !     e_dic_g_surf of Zhang et al. 1995
+    !     eps_dic_g_surf of Zhang et al. 1995
     !---------------------------------------------------------------------
 
     eps_dic_g_surf(:) = 0.014_r8 * sst(:) * frac_co3(:) - 0.105_r8 * sst(:) + 10.53_r8
@@ -202,7 +204,7 @@ contains
     flux14_sa(:) = pv(:) * alpha_k_14c * alpha_aq_g_surf_14c(:) * (co2star(:) * r14c_dic(:) / alpha_dic_g_surf_14c(:))
 
     !-----------------------------------------------------------------------
-    !     end of 13C computation for gass exchange
+    !     end of 13C computation for gas exchange
     !-----------------------------------------------------------------------
 
     surface_fluxes(:,di13c_ind) = surface_fluxes(:,di13c_ind) + flux13(:)
