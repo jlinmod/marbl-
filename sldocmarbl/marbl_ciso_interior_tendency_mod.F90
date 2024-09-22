@@ -120,11 +120,15 @@ contains
          R13C_CO2STAR,      & ! 13C/12C in CO2* water
          R13C_DIC,          & ! 13C/12C in total DIC
          R13C_DOCtot,       & ! 13C/12C in total DOCtot
+         R13C_DOC,          & ! 13C/12C in total DOCsl
+         R13C_DOCr,         & ! 13C/12C in total DOCr
          R13C_zoototC,      & ! 13C/12C in total zooplankton
          R14C_CaCO3_form,   & ! 14C/12C in CaCO3 production of small phyto
          R14C_CO2STAR,      & ! 14C/12C in CO2* water
          R14C_DIC,          & ! 14C/12C in total DIC
          R14C_DOCtot,       & ! 14C/12C in total DOCtot
+         R14C_DOC,          & ! 14C/12C in total DOCsl
+         R14C_DOCr,         & ! 14C/12C in total DOCr
          R14C_zoototC         ! 14C/12C in total zooplankton
 
     real (r8), dimension(autotroph_cnt, marbl_domain%km) :: &
@@ -150,6 +154,10 @@ contains
          CO2STAR_int,       & ! [CO2*] water (mmol/m^3) in interior domain (not only surface)
          DO13Ctot_prod,     & ! production of 13C DOCtot (mmol 13C/m^3/sec)
          DO13Ctot_remin,    & ! remineralization of 13C DOCtot (mmol 13C/m^3/sec)
+         DO13C_prod,        & ! production of 13C DOCsl (mmol 13C/m^3/sec)
+         DO13C_remin,       & ! remineralization of 13C DOCsl (mmol 13C/m^3/sec)
+         DO13Cr_prod,       & ! production of 13C DOCr (mmol 13C/m^3/sec)
+         DO13Cr_remin,      & ! remineralization of 13C DOCr (mmol 13C/m^3/sec)
          eps_aq_g,          & ! equilibrium fractionation (CO2_gaseous <-> CO2_aq)
          eps_dic_g,         & ! equilibrium fractionation between total DIC and gaseous CO2
          alpha_aq_g,        & ! eps = ( alpha -1 ) * 1000
@@ -158,14 +166,22 @@ contains
          delta_C13_CO2STAR, & ! deltaC13 of CO2*
          DO14Ctot_prod,     & ! production of 13C DOCtot (mmol 14C/m^3/sec)
          DO14Ctot_remin,    & ! remineralization of 13C DOCtot (mmol 14C/m^3/sec)
+         DO14C_prod,        & ! production of 13C DOCsl (mmol 14C/m^3/sec)
+         DO14C_remin,       & ! remineralization of 13C DOCsl (mmol 14C/m^3/sec)
+         DO14Cr_prod,       & ! production of 13C DOCr (mmol 14C/m^3/sec)
+         DO14Cr_remin,      & ! remineralization of 13C DOCr (mmol 14C/m^3/sec)
          alpha_aq_g_14c,    & ! alpha for 14C, with fractionation twice as large as for 13C
          alpha_dic_g_14c,   & ! alpha for 14C, with fractionation twice as large as for 13C
          delta_C14_CO2STAR, & ! deltaC14 of CO2*
          DIC_d13C,          & ! d13C of DIC
          DOCtot_d13C,       & ! d13C of DOCtot
+         DOC_d13C,          & ! d13C of DOCsl
+         DOCr_d13C,         & ! d13C of DOCr
          zoototC_d13C,      & ! d13C of zoototC
          DIC_d14C,          & ! d14C of DIC
          DOCtot_d14C,       & ! d14C of DOCtot
+         DOCsl_d14C,        & ! d14C of DOCsl
+         DOCr_d14C,         & ! d14C of DOCr
          zoototC_d14C,      & ! d14C of zoototC
          decay_14Ctot         ! 14C decay loss term
 
@@ -183,9 +199,17 @@ contains
          H2CO3              => interior_tendency_share%H2CO3_fields,         & ! INPUT carbonic acid
          DOCtot_remin       => interior_tendency_share%DOCtot_remin_fields,  & ! INPUT remineralization of DOCtot (mmol C/m^3/sec)
          DOCtot_loc         => interior_tendency_share%DOCtot_loc_fields,    & ! INPUT local copy of model DOCtot
+         DOC_loc            => interior_tendency_share%DOC_loc_fields,       & ! INPUT local copy of model DOCsl ??
+         DOCr_loc           => interior_tendency_share%DOCr_loc_fields,      & ! INPUT local copy of model DOCr  ??
 
+         DOC_loc            => tracer_local(marbl_tracer_indices%DOC_ind,:),       & ! local copy of model DOC
+         DOCr_loc           => tracer_local(marbl_tracer_indices%DOCr_ind,:),      & ! local copy of model DOCr
          DO13Ctot_loc       => tracer_local(marbl_tracer_indices%DO13Ctot_ind,:),  & ! local copy of model DO13Ctot
+         DO13C_loc          => tracer_local(marbl_tracer_indices%DO13C_ind,:),     & ! local copy of model DO13Csl
+         DO13Cr_loc         => tracer_local(marbl_tracer_indices%DO13Cr_ind,:),    & ! local copy of model DO13Cr
          DO14Ctot_loc       => tracer_local(marbl_tracer_indices%DO14Ctot_ind,:),  & ! local copy of model DO14Ctot
+         DO14C_loc          => tracer_local(marbl_tracer_indices%DO14C_ind,:),     & ! local copy of model DO14Csl
+         DO14Cr_loc         => tracer_local(marbl_tracer_indices%DO14Cr_ind,:),    & ! local copy of model DO14Cr
          DIC_loc            => tracer_local(marbl_tracer_indices%DIC_ind,:),       & ! INPUT local copy of model DIC
          DI13C_loc          => tracer_local(marbl_tracer_indices%DI13C_ind,:),     & ! local copy of model DI13C
          DI14C_loc          => tracer_local(marbl_tracer_indices%DI14C_ind,:),     & ! local copy of model DI14C
