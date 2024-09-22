@@ -199,8 +199,6 @@ contains
          H2CO3              => interior_tendency_share%H2CO3_fields,         & ! INPUT carbonic acid
          DOCtot_remin       => interior_tendency_share%DOCtot_remin_fields,  & ! INPUT remineralization of DOCtot (mmol C/m^3/sec)
          DOCtot_loc         => interior_tendency_share%DOCtot_loc_fields,    & ! INPUT local copy of model DOCtot
-         DOC_loc            => interior_tendency_share%DOC_loc_fields,       & ! INPUT local copy of model DOCsl ??
-         DOCr_loc           => interior_tendency_share%DOCr_loc_fields,      & ! INPUT local copy of model DOCr  ??
 
          DOC_loc            => tracer_local(marbl_tracer_indices%DOC_ind,:),       & ! local copy of model DOC
          DOCr_loc           => tracer_local(marbl_tracer_indices%DOCr_ind,:),      & ! local copy of model DOCr
