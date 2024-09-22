@@ -774,8 +774,8 @@ contains
 
     character(len=char_len), intent(in)  :: ciso_fract_factors                  ! option for which biological fractionation calculation to use
     real (r8),               intent(out) :: cell_active_C_uptake(autotroph_cnt) ! ratio of active carbon uptake to carbon fixation
-    real (r8),               intent(out) :: cell_surf(autotroph_cnt)            ! surface areas of cells ( m2 )
-    real (r8),               intent(out) :: cell_carb_cont(autotroph_cnt)       ! cell carbon content ( mol C cell-1 )
+    real (r8),               intent(out) :: cell_surf(autotroph_cnt)            ! surface areas of cells ( m^2 )
+    real (r8),               intent(out) :: cell_carb_cont(autotroph_cnt)       ! cell carbon content ( mol C cell^-1 )
     real (r8),               intent(out) :: cell_radius(autotroph_cnt)          ! cell radius ( um )
     real (r8),               intent(out) :: cell_permea(autotroph_cnt)          ! cell wall permeability to CO2(aq) (m/s)
     real (r8),               intent(out) :: cell_eps_fix(autotroph_cnt)         ! fractionation effect of carbon fixation
