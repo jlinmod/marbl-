@@ -313,13 +313,25 @@ contains
        return
       end if
 
-      lname    = 'DO13Ctot Remineralization'
-      sname    = 'CISO_DO13Ctot_remin'
+      lname    = 'DO13C Production'
+      sname    = 'CISO_DO13C_prod'
       units    = 'mmol/m^3/s'
       vgrid    = 'layer_avg'
       truncate = .false.
       call diags%add_diagnostic(lname, sname, units, vgrid, truncate,  &
-          ind%CISO_DO13Ctot_remin, marbl_status_log)
+          ind%CISO_DO13C_prod, marbl_status_log)
+      if (marbl_status_log%labort_marbl) then
+       call marbl_logging_add_diagnostics_error(marbl_status_log, sname, subname)
+       return
+      end if
+
+      lname    = 'DO13Cr Remineralization'
+      sname    = 'CISO_DO13Cr_remin'
+      units    = 'mmol/m^3/s'
+      vgrid    = 'layer_avg'
+      truncate = .false.
+      call diags%add_diagnostic(lname, sname, units, vgrid, truncate,  &
+          ind%CISO_DO13Cr_remin, marbl_status_log)
       if (marbl_status_log%labort_marbl) then
        call marbl_logging_add_diagnostics_error(marbl_status_log, sname, subname)
        return
@@ -397,6 +409,30 @@ contains
        return
       end if
 
+      lname    = 'd13C of DOC'
+      sname    = 'CISO_DOC_d13C'
+      units    = 'permil'
+      vgrid    = 'layer_avg'
+      truncate = .false.
+      call diags%add_diagnostic(lname, sname, units, vgrid, truncate,  &
+          ind%CISO_DOC_d13C, marbl_status_log)
+      if (marbl_status_log%labort_marbl) then
+       call marbl_logging_add_diagnostics_error(marbl_status_log, sname, subname)
+       return
+      end if
+
+      lname    = 'd13C of DOCr'
+      sname    = 'CISO_DOCr_d13C'
+      units    = 'permil'
+      vgrid    = 'layer_avg'
+      truncate = .false.
+      call diags%add_diagnostic(lname, sname, units, vgrid, truncate,  &
+          ind%CISO_DOCr_d13C, marbl_status_log)
+      if (marbl_status_log%labort_marbl) then
+       call marbl_logging_add_diagnostics_error(marbl_status_log, sname, subname)
+       return
+      end if
+
       lname    = 'd13C of total zooC'
       sname    = 'CISO_zoototC_d13C'
       units    = 'permil'
@@ -457,6 +493,30 @@ contains
        return
       end if
 
+      lname    = 'DO14C Production'
+      sname    = 'CISO_DO14C_prod'
+      units    = 'mmol/m^3/s'
+      vgrid    = 'layer_avg'
+      truncate = .false.
+      call diags%add_diagnostic(lname, sname, units, vgrid, truncate,  &
+          ind%CISO_DO14C_prod, marbl_status_log)
+      if (marbl_status_log%labort_marbl) then
+       call marbl_logging_add_diagnostics_error(marbl_status_log, sname, subname)
+       return
+      end if
+
+      lname    = 'DO14Cr Production'
+      sname    = 'CISO_DO14Cr_prod'
+      units    = 'mmol/m^3/s'
+      vgrid    = 'layer_avg'
+      truncate = .false.
+      call diags%add_diagnostic(lname, sname, units, vgrid, truncate,  &
+          ind%CISO_DO14Cr_prod, marbl_status_log)
+      if (marbl_status_log%labort_marbl) then
+       call marbl_logging_add_diagnostics_error(marbl_status_log, sname, subname)
+       return
+      end if
+
       lname    = 'DO14Ctot Remineralization'
       sname    = 'CISO_DO14Ctot_remin'
       units    = 'mmol/m^3/s'
@@ -464,6 +524,30 @@ contains
       truncate = .false.
       call diags%add_diagnostic(lname, sname, units, vgrid, truncate,  &
           ind%CISO_DO14Ctot_remin, marbl_status_log)
+      if (marbl_status_log%labort_marbl) then
+       call marbl_logging_add_diagnostics_error(marbl_status_log, sname, subname)
+       return
+      end if
+
+      lname    = 'DO14C Remineralization'
+      sname    = 'CISO_DO14C_remin'
+      units    = 'mmol/m^3/s'
+      vgrid    = 'layer_avg'
+      truncate = .false.
+      call diags%add_diagnostic(lname, sname, units, vgrid, truncate,  &
+          ind%CISO_DO14C_remin, marbl_status_log)
+      if (marbl_status_log%labort_marbl) then
+       call marbl_logging_add_diagnostics_error(marbl_status_log, sname, subname)
+       return
+      end if
+
+      lname    = 'DO14Cr Remineralization'
+      sname    = 'CISO_DO14Cr_remin'
+      units    = 'mmol/m^3/s'
+      vgrid    = 'layer_avg'
+      truncate = .false.
+      call diags%add_diagnostic(lname, sname, units, vgrid, truncate,  &
+          ind%CISO_DO14Cr_remin, marbl_status_log)
       if (marbl_status_log%labort_marbl) then
        call marbl_logging_add_diagnostics_error(marbl_status_log, sname, subname)
        return
@@ -536,6 +620,30 @@ contains
       truncate = .false.
       call diags%add_diagnostic(lname, sname, units, vgrid, truncate,  &
           ind%CISO_DOCtot_d14C, marbl_status_log)
+      if (marbl_status_log%labort_marbl) then
+       call marbl_logging_add_diagnostics_error(marbl_status_log, sname, subname)
+       return
+      end if
+
+      lname    = 'd14C of DOC'
+      sname    = 'CISO_DOC_d14C'
+      units    = 'permil'
+      vgrid    = 'layer_avg'
+      truncate = .false.
+      call diags%add_diagnostic(lname, sname, units, vgrid, truncate,  &
+          ind%CISO_DOC_d14C, marbl_status_log)
+      if (marbl_status_log%labort_marbl) then
+       call marbl_logging_add_diagnostics_error(marbl_status_log, sname, subname)
+       return
+      end if
+
+      lname    = 'd14C of DOCr'
+      sname    = 'CISO_DOCr_d14C'
+      units    = 'permil'
+      vgrid    = 'layer_avg'
+      truncate = .false.
+      call diags%add_diagnostic(lname, sname, units, vgrid, truncate,  &
+          ind%CISO_DOCr_d14C, marbl_status_log)
       if (marbl_status_log%labort_marbl) then
        call marbl_logging_add_diagnostics_error(marbl_status_log, sname, subname)
        return
@@ -983,9 +1091,17 @@ contains
        zoototC_d13C,        &
        zoototC_d14C,        &
        DO13Ctot_prod,       &
+       DO13C_prod,          &
+       DO13Cr_prod,         &
        DO14Ctot_prod,       &
+       DO14C_prod,          &
+       DO14Cr_prod,         &
        DO13Ctot_remin,      &
+       DO13C_remin,         &
+       DO13Cr_remin,        &
        DO14Ctot_remin,      &
+       DO14C_remin,         &
+       DO14Cr_remin,        &
        eps_aq_g,            &
        eps_dic_g,           &
        decay_14Ctot,        &
@@ -1027,13 +1143,25 @@ contains
          DIC_d13C       , & ! d13C of DIC
          DIC_d14C       , & ! d14C of DIC
          DOCtot_d13C    , & ! d13C of DOCtot
+         DOC_d13C       , & ! d13C of DOCsl
+         DOCr_d13C      , & ! d13C of DOCr
          DOCtot_d14C    , & ! d14C of DOCtot
+         DOCsl_d14C    , & ! d14C of DOCsl
+         DOCr_d14C    , & ! d14C of DOCr
          zoototC_d13C   , & ! d13C of total zooC
          zoototC_d14C   , & ! d14C of total zooC
          DO13Ctot_prod  , & ! production of 13C DOCtot (mmol C/m^3/sec)
+         DO13C_prod     , & ! production of 13C DOCsl (mmol C/m^3/sec)
+         DO13Cr_prod    , & ! production of 13C DOCr (mmol C/m^3/sec)
          DO14Ctot_prod  , & ! production of 14C DOCtot (mmol C/m^3/sec)
+         DO14C_prod     , & ! production of 14C DOCsl (mmol C/m^3/sec)
+         DO14Cr_prod    , & ! production of 14C DOCr (mmol C/m^3/sec)
          DO13Ctot_remin , & ! remineralization of 13C DOCtot (mmol C/m^3/sec)
+         DO13C_remin    , & ! remineralization of 13C DOCsl (mmol C/m^3/sec)
+         DO13Cr_remin   , & ! remineralization of 13C DOCr (mmol C/m^3/sec)
          DO14Ctot_remin , & ! remineralization of 14C DOCtot (mmol C/m^3/sec)
+         DO14C_remin    , & ! remineralization of 14C DOCsl (mmol C/m^3/sec)
+         DO14Cr_remin   , & ! remineralization of 14C DOCr (mmol C/m^3/sec)
          eps_aq_g       , & ! equilibrium fractionation (CO2_gaseous <-> CO2_aq)
          eps_dic_g      , & ! equilibrium fractionation between total DIC and gaseous CO2
          decay_14Ctot       ! 14C decay loss term
@@ -1070,9 +1198,13 @@ contains
          ind     => marbl_interior_tendency_diag_ind, &
          di13c_ind     => marbl_tracer_indices%di13c_ind,        &
          do13ctot_ind  => marbl_tracer_indices%do13ctot_ind,     &
+         do13c_ind     => marbl_tracer_indices%do13c_ind,     &
+         do13cr_ind    => marbl_tracer_indices%do13cr_ind,     &
          zootot13C_ind => marbl_tracer_indices%zootot13C_ind,    &
          di14c_ind     => marbl_tracer_indices%di14c_ind,        &
          do14ctot_ind  => marbl_tracer_indices%do14ctot_ind,     &
+         do14c_ind     => marbl_tracer_indices%do14c_ind,     &
+         do14cr_ind    => marbl_tracer_indices%do14cr_ind,     &
          zootot14C_ind => marbl_tracer_indices%zootot14C_ind     &
          )
 
@@ -1181,11 +1313,29 @@ contains
        diags(ind%CISO_DOCtot_d13C)%field_3d(k, 1)     = DOCtot_d13C(k)
        diags(ind%CISO_DOCtot_d14C)%field_3d(k, 1)     = DOCtot_d14C(k)
 
+       diags(ind%CISO_DOC_d13C)%field_3d(k, 1)        = DOC_d13C(k)
+       diags(ind%CISO_DOC_d14C)%field_3d(k, 1)        = DOC_d14C(k)
+
+       diags(ind%CISO_DOCr_d13C)%field_3d(k, 1)       = DOCr_d13C(k)
+       diags(ind%CISO_DOCr_d14C)%field_3d(k, 1)       = DOCr_d14C(k)
+
        diags(ind%CISO_DO13Ctot_prod)%field_3d(k, 1)   = DO13Ctot_prod(k)
        diags(ind%CISO_DO14Ctot_prod)%field_3d(k, 1)   = DO14Ctot_prod(k)
 
+       diags(ind%CISO_DO13C_prod)%field_3d(k, 1)      = DO13C_prod(k)
+       diags(ind%CISO_DO14C_prod)%field_3d(k, 1)      = DO14C_prod(k)
+
+       diags(ind%CISO_DO13Cr_prod)%field_3d(k, 1)     = DO13Cr_prod(k)
+       diags(ind%CISO_DO14Cr_prod)%field_3d(k, 1)     = DO14Cr_prod(k)
+
        diags(ind%CISO_DO13Ctot_remin)%field_3d(k, 1)  = DO13Ctot_remin(k)
        diags(ind%CISO_DO14Ctot_remin)%field_3d(k, 1)  = DO14Ctot_remin(k)
+
+       diags(ind%CISO_DO13C_remin)%field_3d(k, 1)     = DO13C_remin(k)
+       diags(ind%CISO_DO14C_remin)%field_3d(k, 1)     = DO14C_remin(k)
+
+       diags(ind%CISO_DO13Cr_remin)%field_3d(k, 1)    = DO13Cr_remin(k)
+       diags(ind%CISO_DO14Cr_remin)%field_3d(k, 1)    = DO14Cr_remin(k)
 
        diags(ind%CISO_zoototC_d13C)%field_3d(k, 1)    = zoototC_d13C(k)
        diags(ind%CISO_zoototC_d14C)%field_3d(k, 1)    = zoototC_d14C(k)
