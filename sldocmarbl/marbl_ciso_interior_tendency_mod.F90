@@ -362,7 +362,7 @@ contains
        end do
 
        !-----------------------------------------------------------------------
-       !   discrimination factors of carbonate chemistry based on
+       !   discrimination factors of carbon chemistry based on
        !   Zhang et al, 1995, Geochim. et Cosmochim. Acta, 59 (1), 107-114
        !
        !   eps = permil fractionation and alpha is the fractionation factor
