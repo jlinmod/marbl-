@@ -38,7 +38,7 @@ module marbl_ciso_interior_tendency_mod
   !-----------------------------------------------------------------------
 
    real (r8), parameter :: c14_halflife_years = 5730.0_r8 !C14 half file
-   real (r8) :: c14_lambda_inv_sec           ! Decay variable in seconds
+   real (r8) :: c14_lambda_inv_sec           ! Decay variable in 1/seconds (converted 5730 year decay to seconds)
 
 contains
 
@@ -97,8 +97,8 @@ contains
 
     real (r8), dimension(autotroph_cnt) :: &
          cell_active_C_uptake,  & ! ratio of active carbon uptake to carbon fixation
-         cell_surf,             & ! surface areas of cells ( m2 )
-         cell_carb_cont,        & ! cell carbon content ( mol C cell-1 )
+         cell_surf,             & ! surface areas of cells ( m^2 )
+         cell_carb_cont,        & ! cell carbon content ( mol C cell^-1 )
          cell_radius,           & ! cell radius ( um )
          cell_permea,           & ! cell wall permeability to CO2(aq) (m/s)
          cell_eps_fix             ! fractionation effect of carbon fixation
@@ -128,36 +128,36 @@ contains
          R14C_zoototC         ! 14C/12C in total zooplankton
 
     real (r8), dimension(autotroph_cnt, marbl_domain%km) :: &
-         Ca13CO3_PROD,        & ! prod. of 13C CaCO3 by small phyto (mmol CaCO3/m^3/sec)
-         Ca14CO3_PROD,        & ! prod. of 13C CaCO3 by small phyto (mmol CaCO3/m^3/sec)
+         Ca13CO3_PROD,        & ! prod. of 13C CaCO3 by small phyto (mmol Ca13CO3/m^3/sec)
+         Ca14CO3_PROD,        & ! prod. of 14C CaCO3 by small phyto (mmol Ca14CO3/m^3/sec)
          eps_autotroph,       & ! Permil fractionation (or discrimination factor) for Carbon autotroph types sp, diat, diaz
          mui_to_co2star,      & ! Carbon autotroph instanteous growth rate over [CO2*] (m^3 /mmol C /s)
-         R13C_photoC,         & ! 13C/12C in Carbon autotroph C-fixation (mmol C/m^3/sec)
-         R13C_autotroph,      & ! 13C/12C in total small phytoplankton
-         photo13C,            & ! Carbon autotroph 13C-fixation (mmol C/m^3/sec)
-         photo14C,            & ! Carbon autotroph 14C-fixation (mmol C/m^3/sec)
-         R14C_photoC,         & ! 14C/12C in Carbon autotroph C-fixation (mmol C/m^3/sec)
-         R14C_autotroph,      & ! 14C/12C in total small phytoplankton
+         R13C_photoC,         & ! 13C/12C in Carbon autotroph C-fixation (mmol 13C/m^3/sec)
+         R13C_autotroph,      & ! 13C/12C in total small phytoplankton (mmol 13C/m^3/sec)
+         photo13C,            & ! Carbon autotroph 13C-fixation (mmol 13C/m^3/sec)
+         photo14C,            & ! Carbon autotroph 14C-fixation (mmol 14C/m^3/sec)
+         R14C_photoC,         & ! 14C/12C in Carbon autotroph C-fixation (mmol 14C/m^3/sec)
+         R14C_autotroph,      & ! 14C/12C in total small phytoplankton (mmol 14C/m^3/sec)
          autotrophCaCO3_d13C, & ! d13C of autotrophCaCO3
          autotrophCaCO3_d14C, & ! d14C of autotrophCaCO3
          autotroph_d13C,      & ! d13C of autotroph C
          autotroph_d14C,      & ! d14C of autotroph C
-         R13C_autotrophCaCO3, & ! 13C/12C in total small phytoplankton carbonate
-         R14C_autotrophCaCO3    ! 14C/12C in total small phytoplankton carbonate
+         R13C_autotrophCaCO3, & ! 13C/12C in total small phytoplankton carbonate (unitless?)
+         R14C_autotrophCaCO3    ! 14C/12C in total small phytoplankton carbonate (unitless?)
 
     real (r8), dimension(marbl_domain%km) :: &
          frac_co3,          & ! carbonate fraction fCO3 = [CO3--]/DIC
          CO2STAR_int,       & ! [CO2*] water (mmol/m^3) in interior domain (not only surface)
-         DO13Ctot_prod,     & ! production of 13C DOCtot (mmol C/m^3/sec)
-         DO13Ctot_remin,    & ! remineralization of 13C DOCtot (mmol C/m^3/sec)
+         DO13Ctot_prod,     & ! production of 13C DOCtot (mmol 13C/m^3/sec)
+         DO13Ctot_remin,    & ! remineralization of 13C DOCtot (mmol 13C/m^3/sec)
          eps_aq_g,          & ! equilibrium fractionation (CO2_gaseous <-> CO2_aq)
          eps_dic_g,         & ! equilibrium fractionation between total DIC and gaseous CO2
-         alpha_aq_g,        & ! eps = ( alpa -1 ) * 1000
-         alpha_dic_g,       & ! eps = ( alpa -1 ) * 1000
+         alpha_aq_g,        & ! eps = ( alpha -1 ) * 1000
+         alpha_dic_g,       & ! eps = ( alpha -1 ) * 1000
          delta_C13_Corg,    & ! deltaC13 of Net Primary Production
          delta_C13_CO2STAR, & ! deltaC13 of CO2*
-         DO14Ctot_prod,     & ! production of 13C DOCtot (mmol C/m^3/sec)
-         DO14Ctot_remin,    & ! remineralization of 13C DOCtot (mmol C/m^3/sec)
+         DO14Ctot_prod,     & ! production of 13C DOCtot (mmol 14C/m^3/sec)
+         DO14Ctot_remin,    & ! remineralization of 13C DOCtot (mmol 14C/m^3/sec)
          alpha_aq_g_14c,    & ! alpha for 14C, with fractionation twice as large as for 13C
          alpha_dic_g_14c,   & ! alpha for 14C, with fractionation twice as large as for 13C
          delta_C14_CO2STAR, & ! deltaC14 of CO2*
@@ -184,7 +184,7 @@ contains
          DOCtot_remin       => interior_tendency_share%DOCtot_remin_fields,  & ! INPUT remineralization of DOCtot (mmol C/m^3/sec)
          DOCtot_loc         => interior_tendency_share%DOCtot_loc_fields,    & ! INPUT local copy of model DOCtot
 
-         DO13Ctot_loc       => tracer_local(marbl_tracer_indices%DO13Ctot_ind,:),  & ! local copy of model DO14Ctot
+         DO13Ctot_loc       => tracer_local(marbl_tracer_indices%DO13Ctot_ind,:),  & ! local copy of model DO13Ctot
          DO14Ctot_loc       => tracer_local(marbl_tracer_indices%DO14Ctot_ind,:),  & ! local copy of model DO14Ctot
          DIC_loc            => tracer_local(marbl_tracer_indices%DIC_ind,:),       & ! INPUT local copy of model DIC
          DI13C_loc          => tracer_local(marbl_tracer_indices%DI13C_ind,:),     & ! local copy of model DI13C
@@ -798,12 +798,12 @@ contains
              !----------------------------------------------------------------------------------------
              ! Diatom based on P. tricornumtum ( Keller and morel, 1999; Popp et al., 1998 )
              !----------------------------------------------------------------------------------------
-             cell_active_C_uptake(auto_ind) = 2.3_r8       ! ratio of active carbon uptake to carbon fixation
-             cell_surf(auto_ind)            = 100.6e-12_r8 ! surface areas of cells ( m2 )
-             cell_carb_cont(auto_ind)       = 63.3e-14_r8  ! cell carbon content ( mol C cell-1 )
-             cell_radius(auto_ind)          = 14.2_r8      ! cell radius ( um )
-             cell_permea(auto_ind)          = 3.3e-5_r8    ! cell wall permeability to CO2(aq) (m/s)
-             cell_eps_fix(auto_ind)         = 26.6_r8      ! fractionation effect of carbon fixation
+             cell_active_C_uptake(auto_ind) = 2.3_r8       ! ratio of active carbon uptake to carbon fixation (kellermorel)
+             cell_surf(auto_ind)            = 100.6e-12_r8 ! surface areas of cells (m^2) (Popp)
+             cell_carb_cont(auto_ind)       = 63.3e-14_r8  ! cell carbon content (mol C cell^-1) (Popp)
+             cell_radius(auto_ind)          = 14.2_r8      ! cell radius (um) (Popp) 
+             cell_permea(auto_ind)          = 3.3e-5_r8    ! cell wall permeability to CO2(aq) (m/s) (kellermorel)
+             cell_eps_fix(auto_ind)         = 26.6_r8      ! fractionation effect of carbon fixation (kellermorel)
 
           else if (autotroph_settings(auto_ind)%Nfixer) then
              !----------------------------------------------------------------------------------------
@@ -818,12 +818,12 @@ contains
              !----------------------------------------------------------------------------------------
              ! Diazotroph based on Synechococcus sp. ( Keller and morel, 1999; Popp et al., 1998 )
              !----------------------------------------------------------------------------------------
-             cell_active_C_uptake(auto_ind) = 7.5_r8        ! ratio of active carbon uptake to carbon fixation
-             cell_surf(auto_ind)            = 5.8e-12_r8    ! surface areas of cells ( m2 )
-             cell_carb_cont(auto_ind)       = 3e-14_r8      ! cell carbon content ( mol C cell-1 )
-             cell_radius(auto_ind)          = 0.68_r8       ! cell radius ( um )
-             cell_permea(auto_ind)          = 3.0e-8_r8     ! cell wall permeability to CO2(aq) (m/s)
-             cell_eps_fix(auto_ind)         = 30.0_r8       ! fractionation effect of carbon fixation
+             cell_active_C_uptake(auto_ind) = 7.5_r8        ! ratio of active carbon uptake to carbon fixation (kellermorel)
+             cell_surf(auto_ind)            = 5.8e-12_r8    ! surface areas of cells (m^2) (Popp)
+             cell_carb_cont(auto_ind)       = 3e-14_r8      ! cell carbon content (mol C cell^-1) (Popp)
+             cell_radius(auto_ind)          = 0.68_r8       ! cell radius (um) (Popp)
+             cell_permea(auto_ind)          = 3.0e-8_r8     ! cell wall permeability to CO2(aq) (m/s) (kellermorel)
+             cell_eps_fix(auto_ind)         = 30.0_r8       ! fractionation effect of carbon fixation (kellermorel)
 
          !else if (autotroph_settings(auto_ind)%exp_calcifier) then
              !Currently not set up to separate exp_calcifiers, needs cell_radius value from data
@@ -832,12 +832,12 @@ contains
              ! Popp et al express cell carbon content in ( pg C cell-1 ), here we convert in (mol C cell-1)
              ! convert pgC to molC : ! Mc = 12 g / mol ! Mc = 12 e12 pg / mol
              !----------------------------------------------------------------------------------------
-             !   cell_active_C_uptake(auto_ind) = 0.0_r9       ! ratio of active carbon uptake to carbon fixation
-             !   cell_surf(auto_ind)            = 3886.0_r8    ! surface areas of cells ( m2 )
-             !   cell_carb_cont(auto_ind)       = 1.68e-10_r8  ! cell carbon content ( mol C cell-1 )
+             !   cell_active_C_uptake(auto_ind) = 0.0_r9       ! ratio of active carbon uptake to carbon fixation (kellermorel)
+             !   cell_surf(auto_ind)            = 3886.0_r8    ! surface areas of cells ( um^2 ) (Popp)
+             !   cell_carb_cont(auto_ind)       = 1.68e-10_r8  ! cell carbon content ( mol C cell-1 ) (Popp)
              !   cell_radius(auto_ind)          =              ! cell radius ( um )
-             !   cell_permea(auto_ind)          = 1.1e-5_r8    ! cell wall permeability to CO2(aq) (m/s)
-             !   cell_eps_fix(auto_ind)         = 23.0_r8      ! fractionation effect of carbon fixation
+             !   cell_permea(auto_ind)          = 1.1e-5_r8    ! cell wall permeability to CO2(aq) (m/s) (kellermorel)
+             !   cell_eps_fix(auto_ind)         = 23.0_r8      ! fractionation effect of carbon fixation (kellermorel)
 
           else if (autotroph_settings(auto_ind)%Nfixer .and. &
                    autotroph_settings(auto_ind)%silicifier) then
@@ -851,12 +851,12 @@ contains
              ! Popp et al express cell carbon content in ( pg C cell-1 ), here we convert in (mol C cell-1)
              ! convert pgC to molC : ! Mc = 12 g / mol ! Mc = 12 e12 pg / mol
              !----------------------------------------------------------------------------------------
-             cell_active_C_uptake(auto_ind) = 2.2_r8      ! ratio of active carbon uptake to carbon fixation
-             cell_surf(auto_ind)            = 87.6e-12_r8 ! surface areas of cells ( m2 )
-             cell_carb_cont(auto_ind)       = 69.2e-14_r8 ! cell carbon content ( mol C cell-1 )
-             cell_radius(auto_ind)          = 2.6_r8      ! cell radius ( um )
-             cell_permea(auto_ind)          = 1.8e-5_r8   ! cell wall permeability to CO2(aq) (m/s)
-             cell_eps_fix(auto_ind)         = 25.3_r8     ! fractionation effect of carbon fixation
+             cell_active_C_uptake(auto_ind) = 2.2_r8      ! ratio of active carbon uptake to carbon fixation (kellermorel)
+             cell_surf(auto_ind)            = 87.6e-12_r8 ! surface areas of cells (m^2) (Popp)
+             cell_carb_cont(auto_ind)       = 69.2e-14_r8 ! cell carbon content (mol C cell^-1) (Popp)
+             cell_radius(auto_ind)          = 2.6_r8      ! cell radius (um) (Popp)
+             cell_permea(auto_ind)          = 1.8e-5_r8   ! cell wall permeability to CO2(aq) (m/s) (kellermorel)
+             cell_eps_fix(auto_ind)         = 25.3_r8     ! fractionation effect of carbon fixation (kellermorel)
 
           endif
        end do
@@ -947,6 +947,12 @@ contains
     !---------------------------------------------------------------------
     !     cellular carbon content ( mol C )
     !     volume in um^3
+    !     
+    !     Qc based on Dieter A. Wolf-Gladrow, Ulf Riebeseel, Steffen Burkhardt and Jelle Buma (1999)
+    !     Direct effects of CO2 concentration on growth and isotopic composition of marine plankton, based on
+    !     
+    !     Strathmann, 1967: Estimating the organic carbon content of phytoplankton from cell volume
+    !     or plasma volume
     !---------------------------------------------------------------------
 
     if ( cell_carb_cont > c0 ) then
