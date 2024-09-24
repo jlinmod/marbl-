@@ -54,6 +54,7 @@ module ecosys_driver
   use ecosys_tracers_and_saved_state_mod, only : di13c_ind, di14c_ind
   use ecosys_tracers_and_saved_state_mod, only : o2_ind, no3_ind, po4_ind, don_ind, donr_ind, dop_ind, dopr_ind
   use ecosys_tracers_and_saved_state_mod, only : sio3_ind, fe_ind, doc_ind, docr_ind, do13ctot_ind, do14ctot_ind
+  use ecosys_tracers_and_saved_state_mod, only : do13c_ind, do13cr_ind, do14c_ind, do14cr_ind
 
   ! Provide marbl_tracer_cnt to passive_tracers.F90 (as ecosys_tracer_cnt)
   use ecosys_tracers_and_saved_state_mod, only : ecosys_tracer_cnt => marbl_tracer_cnt
@@ -446,7 +447,11 @@ contains
     doc_ind      = marbl_instances(1)%get_tracer_index('DOC')
     docr_ind     = marbl_instances(1)%get_tracer_index('DOCr')
     do13ctot_ind = marbl_instances(1)%get_tracer_index('DO13Ctot')
+    do13c_ind    = marbl_instances(1)%get_tracer_index('DO13C')
+    do13cr_ind   = marbl_instances(1)%get_tracer_index('DO13Cr')
     do14ctot_ind = marbl_instances(1)%get_tracer_index('DO14Ctot')
+    do14c_ind    = marbl_instances(1)%get_tracer_index('DO14C')
+    do14cr_ind   = marbl_instances(1)%get_tracer_index('DO14Cr')
 
     ! pass ecosys_forcing_data_nml
     ! to ecosys_forcing_init()
