@@ -180,7 +180,7 @@ contains
          zoototC_d13C,      & ! d13C of zoototC
          DIC_d14C,          & ! d14C of DIC
          DOCtot_d14C,       & ! d14C of DOCtot
-         DOCsl_d14C,        & ! d14C of DOCsl
+         DOC_d14C,        & ! d14C of DOCsl
          DOCr_d14C,         & ! d14C of DOCr
          zoototC_d14C,      & ! d14C of zoototC
          decay_14Ctot         ! 14C decay loss term
