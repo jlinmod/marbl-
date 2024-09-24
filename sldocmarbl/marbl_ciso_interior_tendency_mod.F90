@@ -709,7 +709,7 @@ contains
        interior_tendencies(di14c_ind,k) = &
             sum((auto_loss_dic(:,k) + auto_graze_dic(:,k))*R14C_autotroph(:,k),dim=1) &
           - sum(photo14C(:,k),dim=1) &
-          + DO14Ctot_remin(k) + DO14Cr_remin(k) + PO14C%remin(k) &
+          + DO14C_remin(k) + DO14Cr_remin(k) + PO14C%remin(k) &
           + (zootot_loss_dic(k) + zootot_graze_dic(k)) * R14C_zoototC(k) &
           + P_Ca14CO3%remin(k) &
           - c14_lambda_inv_sec * DI14C_loc(k)
