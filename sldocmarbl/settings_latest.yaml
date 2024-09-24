@@ -101,6 +101,7 @@ _tracer_list :
    DOCr :
       long_name : Refractory DOC
       units : mmol/m^3
+   
    # Non-living (ciso only)
    DI13C :
       dependencies :
@@ -112,6 +113,16 @@ _tracer_list :
          ciso_on : .true.
       long_name : Dissolved Organic Carbon-13 (semi-labile+refractoy)
       units : mmol/m^3
+   DO13C :
+      dependencies :
+         ciso_on : .true.
+      long_name : Dissolved Organic Carbon-13 (semi-labile)
+      units : mmol/m^3
+   DO13Cr :
+      dependencies :
+         ciso_on : .true.
+      long_name : Dissolved Organic Carbon-13 (refractoy)
+      units : mmol/m^3
    DI14C :
       dependencies :
          ciso_on : .true.
@@ -121,6 +132,16 @@ _tracer_list :
       dependencies :
          ciso_on : .true.
       long_name : Dissolved Organic Carbon-14 (semi-labile+refractoy)
+      units : mmol/m^3
+   DO14C :
+      dependencies :
+         ciso_on : .true.
+      long_name : Dissolved Organic Carbon-14 (semi-labile)
+      units : mmol/m^3
+   DO14Cr :
+      dependencies :
+         ciso_on : .true.
+      long_name : Dissolved Organic Carbon-14 (refractoy)
       units : mmol/m^3
 
    # Per-autotroph tracers
