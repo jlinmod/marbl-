@@ -532,7 +532,7 @@ contains
             (zootot_loss_doc(k) + zootot_graze_doc(k))*R13C_zoototC(k) + &
             sum((auto_loss_doc(:,k) + auto_graze_doc(:,k)) * R13C_autotroph(:,k),dim=1)
 
-       DO13C_prod(k) = (c1 - DOCprod_refract) * ( &
+       DO13C_prod(k)    = (c1 - DOCprod_refract) * ( &
             (zootot_loss_doc(k) + zootot_graze_doc(k))*R13C_zoototC(k) + &
             sum((auto_loss_doc(:,k) + auto_graze_doc(:,k)) * R13C_autotroph(:,k),dim=1))
 
