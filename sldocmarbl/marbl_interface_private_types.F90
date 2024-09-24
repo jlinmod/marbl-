@@ -351,8 +351,13 @@ module marbl_interface_private_types
     ! CISO tracers
     integer (int_kind) :: di13c_ind       = 0 ! dissolved inorganic carbon 13
     integer (int_kind) :: do13ctot_ind    = 0 ! dissolved organic carbon 13 (semi-labile+refractory)
+    integer (int_kind) :: do13c_ind       = 0 ! dissolved organic carbon 13 (semi-labile)
+    integer (int_kind) :: do13cr_ind      = 0 ! dissolved organic carbon 13 (refractory)
     integer (int_kind) :: di14c_ind       = 0 ! dissolved inorganic carbon 14
     integer (int_kind) :: do14ctot_ind    = 0 ! dissolved organic carbon 14 (semi-labile+refractory)
+    integer (int_kind) :: do14c_ind       = 0 ! dissolved organic carbon 14 (semi-labile)
+    integer (int_kind) :: do14cr_ind      = 0 ! dissolved organic carbon 14 (refractory)
+
 
     ! Living tracers
     type(marbl_living_tracer_index_type), allocatable :: auto_inds(:)
@@ -734,15 +739,27 @@ module marbl_interface_private_types
      integer (int_kind) :: CISO_eps_aq_g                                      ! eps_aq_g
      integer (int_kind) :: CISO_eps_dic_g                                     ! eps_dic_g
      integer (int_kind) :: CISO_DO13Ctot_prod                                 ! do13ctot production
+     integer (int_kind) :: CISO_DO13C_prod                                    ! do13csl production
+     integer (int_kind) :: CISO_DO13Cr_prod                                   ! do13cr production
      integer (int_kind) :: CISO_DO14Ctot_prod                                 ! do14ctot production
+     integer (int_kind) :: CISO_DO14C_prod                                    ! do14csl production
+     integer (int_kind) :: CISO_DO14Cr_prod                                   ! do14cr production
      integer (int_kind) :: CISO_DO13Ctot_remin                                ! do13ctot remineralization
+     integer (int_kind) :: CISO_DO13C_remin                                   ! do13csl remineralization
+     integer (int_kind) :: CISO_DO13Cr_remin                                  ! do13cr remineralization
      integer (int_kind) :: CISO_DO14Ctot_remin                                ! do14ctot remineralization
+     integer (int_kind) :: CISO_DO14C_remin                                   ! do14csl remineralization
+     integer (int_kind) :: CISO_DO14Cr_remin                                  ! do14cr remineralization
      integer (int_kind) :: CISO_Jint_13Ctot                                   ! vertically integrated source sink term, 13Ctot
      integer (int_kind) :: CISO_Jint_14Ctot                                   ! vertically integrated source sink term, 14Ctot
      integer (int_kind) :: CISO_zoototC_d13C                                  ! d13C of total zooC
      integer (int_kind) :: CISO_zoototC_d14C                                  ! d14C of total zooC
      integer (int_kind) :: CISO_DOCtot_d13C                                   ! d13C of DOCtot
+     integer (int_kind) :: CISO_DOC_d13C                                      ! d13C of DOCsl
+     integer (int_kind) :: CISO_DOCr_d13C                                     ! d13C of DOCr
      integer (int_kind) :: CISO_DOCtot_d14C                                   ! d14C of DOCtot
+     integer (int_kind) :: CISO_DOC_d14C                                      ! d14C of DOCsl
+     integer (int_kind) :: CISO_DOCr_d14C                                     ! d14C of DOCr
      integer (int_kind) :: CISO_DIC_d13C                                      ! d13C of DIC
      integer (int_kind) :: CISO_DIC_d14C                                      ! d14C of DIC
      integer (int_kind) :: calcToSed_13C                                      ! calcite flux sedimentary burial
@@ -1446,8 +1463,12 @@ contains
     if (ciso_on) then
       call this%add_tracer_index('di13c',    'ciso', this%di13c_ind,    marbl_status_log)
       call this%add_tracer_index('do13ctot', 'ciso', this%do13ctot_ind, marbl_status_log)
+      call this%add_tracer_index('do13c', 'ciso', this%do13c_ind, marbl_status_log)
+      call this%add_tracer_index('do13cr', 'ciso', this%do13cr_ind, marbl_status_log)
       call this%add_tracer_index('di14c',    'ciso', this%di14c_ind,    marbl_status_log)
       call this%add_tracer_index('do14ctot', 'ciso', this%do14ctot_ind, marbl_status_log)
+      call this%add_tracer_index('do14c', 'ciso', this%do14c_ind, marbl_status_log)
+      call this%add_tracer_index('do14cr', 'ciso', this%do14cr_ind, marbl_status_log)
       call this%add_tracer_index('zootot13C',   'ciso', this%zootot13C_ind,   marbl_status_log)
       call this%add_tracer_index('zootot14C',   'ciso', this%zootot14C_ind,   marbl_status_log)
 
