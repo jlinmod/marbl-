@@ -69,7 +69,11 @@ module ecosys_tracers_and_saved_state_mod
   integer(int_kind), public :: doc_ind
   integer(int_kind), public :: docr_ind
   integer(int_kind), public :: do13ctot_ind
+  integer(int_kind), public :: do13c_ind
+  integer(int_kind), public :: do13cr_ind
   integer(int_kind), public :: do14ctot_ind
+  integer(int_kind), public :: do14c_ind
+  integer(int_kind), public :: do14cr_ind
 
   !---------------------------------------------------------------------
   !  Private variables read in via &ecosys_tracer_init_nml
