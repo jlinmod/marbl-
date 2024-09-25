@@ -1166,7 +1166,7 @@ contains
 
     ! Vertical integrals - CISO_Jint_13Ctot
 
-    work(:) = interior_tendencies(di13c_ind,:) + interior_tendencies(do13ctot_ind,:) + interior_tendencies(zootot13C_ind,:) &
+    work(:) = interior_tendencies(di13c_ind,:) + interior_tendencies(do13c_ind,:) + interior_tendencies(do13cr_ind,:) + interior_tendencies(zootot13C_ind,:) &
          + sum(interior_tendencies(marbl_tracer_indices%auto_inds(:)%C13_ind,:), dim=1)
     do auto_ind = 1, autotroph_cnt
        n = marbl_tracer_indices%auto_inds(auto_ind)%Ca13CO3_ind
@@ -1188,7 +1188,7 @@ contains
 
     ! Vertical integral - CISO_Jint_14Ctot
 
-    work(:) = interior_tendencies(di14c_ind,:) + interior_tendencies(do14ctot_ind,:) + interior_tendencies(zootot14C_ind,:) &
+    work(:) = interior_tendencies(di14c_ind,:) + interior_tendencies(do14c_ind,:) + interior_tendencies(do14cr_ind,:) + interior_tendencies(zootot14C_ind,:) &
          + sum(interior_tendencies(marbl_tracer_indices%auto_inds(:)%C14_ind,:), dim=1) + decay_14Ctot
     do auto_ind = 1, autotroph_cnt
        n = marbl_tracer_indices%auto_inds(auto_ind)%Ca14CO3_ind
