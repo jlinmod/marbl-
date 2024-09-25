@@ -77,10 +77,10 @@ feventflux_input%scale_factor = 1.1574e-6
 ! scale river dFe to 0.3 Gmol/yr
 riv_flux_dfe_scale_factor =          0.9303
 
-!---------------------------------------------------------------------------------- 9-5-24 20 yr average jsl.012 1531_1550 yr CISO in IC file, use all variables, DOC from OG, DO13C set as -21, DO14C*60
+!---------------------------------------------------------------------------------- 9-25-24 20 yr average jsl.012 1531_1550 yr CISO in IC file, use all variables, DOCtot from OG, DO13Ctot set as -21, DO14Ctot*60, DO13C and DO13Cr=-21, DO14C = 0 and DO14Cr=-400
 
 
-init_ecosys_init_file = '/mnt/lustre/letscher/jsl1063/initcond/cisodogd21d60/jsl116_ciso_ecosys_jan_IC_gx3v7_20180308.nc'
+init_ecosys_init_file = '/mnt/lustre/letscher/jsl1063/initcond/cisodocsl/jsl118_ciso_ecosys_jan_IC_gx3v7_20180308.nc'
 
 ciso_tracer_init_ext(1)%file_varname = 'unknown'
 ciso_tracer_init_ext(1)%mod_varname = 'unknown'
@@ -131,7 +131,19 @@ ciso_tracer_init_ext(14)%file_varname = 'unknown'
 ciso_tracer_init_ext(14)%mod_varname = 'unknown'
 ciso_tracer_init_ext(14)%scale_factor = 1.0
 
+ciso_tracer_init_ext(15)%file_varname = 'unknown'
+ciso_tracer_init_ext(15)%mod_varname = 'unknown'
+ciso_tracer_init_ext(15)%scale_factor = 1.0
+ciso_tracer_init_ext(16)%file_varname = 'unknown'
+ciso_tracer_init_ext(16)%mod_varname = 'unknown'
+ciso_tracer_init_ext(16)%scale_factor = 1.0
 
+ciso_tracer_init_ext(17)%file_varname = 'unknown'
+ciso_tracer_init_ext(17)%mod_varname = 'unknown'
+ciso_tracer_init_ext(17)%scale_factor = 1.0
+ciso_tracer_init_ext(18)%file_varname = 'unknown'
+ciso_tracer_init_ext(18)%mod_varname = 'unknown'
+ciso_tracer_init_ext(18)%scale_factor = 1.0
 
 
 
