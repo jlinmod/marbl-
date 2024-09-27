@@ -164,12 +164,12 @@ contains
          alpha_dic_g,       & ! eps = ( alpha -1 ) * 1000
          delta_C13_Corg,    & ! deltaC13 of Net Primary Production
          delta_C13_CO2STAR, & ! deltaC13 of CO2*
-         DO14Ctot_prod,     & ! production of 13C DOCtot (mmol 14C/m^3/sec)
-         DO14Ctot_remin,    & ! remineralization of 13C DOCtot (mmol 14C/m^3/sec)
-         DO14C_prod,        & ! production of 13C DOCsl (mmol 14C/m^3/sec)
-         DO14C_remin,       & ! remineralization of 13C DOCsl (mmol 14C/m^3/sec)
-         DO14Cr_prod,       & ! production of 13C DOCr (mmol 14C/m^3/sec)
-         DO14Cr_remin,      & ! remineralization of 13C DOCr (mmol 14C/m^3/sec)
+         DO14Ctot_prod,     & ! production of 14C DOCtot (mmol 14C/m^3/sec)
+         DO14Ctot_remin,    & ! remineralization of 14C DOCtot (mmol 14C/m^3/sec)
+         DO14C_prod,        & ! production of 14C DOCsl (mmol 14C/m^3/sec)
+         DO14C_remin,       & ! remineralization of 14C DOCsl (mmol 14C/m^3/sec)
+         DO14Cr_prod,       & ! production of 14C DOCr (mmol 14C/m^3/sec)
+         DO14Cr_remin,      & ! remineralization of 14C DOCr (mmol 14C/m^3/sec)
          alpha_aq_g_14c,    & ! alpha for 14C, with fractionation twice as large as for 13C
          alpha_dic_g_14c,   & ! alpha for 14C, with fractionation twice as large as for 13C
          delta_C14_CO2STAR, & ! deltaC14 of CO2*
