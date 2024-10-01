@@ -1154,10 +1154,42 @@ CISO_DO13Ctot_prod :
    vertical_grid : layer_avg
    frequency : medium
    operator : average
+CISO_DO13C_prod :
+   dependencies :
+      ciso_on : .true.
+   longname : DO13Csl Production
+   units : mmol/m^3/s
+   vertical_grid : layer_avg
+   frequency : medium
+   operator : average
+CISO_DO13Cr_prod :
+   dependencies :
+      ciso_on : .true.
+   longname : DO13Cr Production
+   units : mmol/m^3/s
+   vertical_grid : layer_avg
+   frequency : medium
+   operator : average
 CISO_DO13Ctot_remin :
    dependencies :
       ciso_on : .true.
    longname : DO13Ctot Remineralization
+   units : mmol/m^3/s
+   vertical_grid : layer_avg
+   frequency : medium
+   operator : average
+CISO_DO13C_remin :
+   dependencies :
+      ciso_on : .true.
+   longname : DO13Csl Remineralization
+   units : mmol/m^3/s
+   vertical_grid : layer_avg
+   frequency : medium
+   operator : average
+CISO_DO13Cr_remin :
+   dependencies :
+      ciso_on : .true.
+   longname : DO13Cr Remineralization
    units : mmol/m^3/s
    vertical_grid : layer_avg
    frequency : medium
@@ -1210,6 +1242,22 @@ CISO_DOCtot_d13C :
    vertical_grid : layer_avg
    frequency : medium
    operator : average
+CISO_DOC_d13C :
+   dependencies :
+      ciso_on : .true.
+   longname : d13C of DOCsl
+   units : permil
+   vertical_grid : layer_avg
+   frequency : medium
+   operator : average
+CISO_DOCr_d13C :
+   dependencies :
+      ciso_on : .true.
+   longname : d13C of DOCr
+   units : permil
+   vertical_grid : layer_avg
+   frequency : medium
+   operator : average
 CISO_zoototC_d13C :
    dependencies :
       ciso_on : .true.
@@ -1250,10 +1298,42 @@ CISO_DO14Ctot_prod :
    vertical_grid : layer_avg
    frequency : medium
    operator : average
+CISO_DO14C_prod :
+   dependencies :
+      ciso_on : .true.
+   longname : DO14Csl Production
+   units : mmol/m^3/s
+   vertical_grid : layer_avg
+   frequency : medium
+   operator : average
+CISO_DO14Cr_prod :
+   dependencies :
+      ciso_on : .true.
+   longname : DO14Cr Production
+   units : mmol/m^3/s
+   vertical_grid : layer_avg
+   frequency : medium
+   operator : average
 CISO_DO14Ctot_remin :
    dependencies :
       ciso_on : .true.
    longname : DO14Ctot Remineralization
+   units : mmol/m^3/s
+   vertical_grid : layer_avg
+   frequency : medium
+   operator : average
+CISO_DO14C_remin :
+   dependencies :
+      ciso_on : .true.
+   longname : DO14Csl Remineralization
+   units : mmol/m^3/s
+   vertical_grid : layer_avg
+   frequency : medium
+   operator : average
+CISO_DO14Cr_remin :
+   dependencies :
+      ciso_on : .true.
+   longname : DO14Cr Remineralization
    units : mmol/m^3/s
    vertical_grid : layer_avg
    frequency : medium
@@ -1302,6 +1382,22 @@ CISO_DOCtot_d14C :
    dependencies :
       ciso_on : .true.
    longname : d14C of DOCtot
+   units : permil
+   vertical_grid : layer_avg
+   frequency : medium
+   operator : average
+CISO_DOC_d14C :
+   dependencies :
+      ciso_on : .true.
+   longname : d14C of DOCsl
+   units : permil
+   vertical_grid : layer_avg
+   frequency : medium
+   operator : average
+CISO_DOCr_d14C :
+   dependencies :
+      ciso_on : .true.
+   longname : d14C of DOCr
    units : permil
    vertical_grid : layer_avg
    frequency : medium
