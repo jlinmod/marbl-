@@ -120,11 +120,15 @@ contains
          R13C_CO2STAR,      & ! 13C/12C in CO2* water
          R13C_DIC,          & ! 13C/12C in total DIC
          R13C_DOCtot,       & ! 13C/12C in total DOCtot
+         R13C_DOC,          & ! 13C/12C in total DOCsl
+         R13C_DOCr,         & ! 13C/12C in total DOCr
          R13C_zoototC,      & ! 13C/12C in total zooplankton
          R14C_CaCO3_form,   & ! 14C/12C in CaCO3 production of small phyto
          R14C_CO2STAR,      & ! 14C/12C in CO2* water
          R14C_DIC,          & ! 14C/12C in total DIC
          R14C_DOCtot,       & ! 14C/12C in total DOCtot
+         R14C_DOC,          & ! 14C/12C in total DOCsl
+         R14C_DOCr,         & ! 14C/12C in total DOCr
          R14C_zoototC         ! 14C/12C in total zooplankton
 
     real (r8), dimension(autotroph_cnt, marbl_domain%km) :: &
@@ -150,22 +154,34 @@ contains
          CO2STAR_int,       & ! [CO2*] water (mmol/m^3) in interior domain (not only surface)
          DO13Ctot_prod,     & ! production of 13C DOCtot (mmol 13C/m^3/sec)
          DO13Ctot_remin,    & ! remineralization of 13C DOCtot (mmol 13C/m^3/sec)
+         DO13C_prod,        & ! production of 13C DOCsl (mmol 13C/m^3/sec)
+         DO13C_remin,       & ! remineralization of 13C DOCsl (mmol 13C/m^3/sec)
+         DO13Cr_prod,       & ! production of 13C DOCr (mmol 13C/m^3/sec)
+         DO13Cr_remin,      & ! remineralization of 13C DOCr (mmol 13C/m^3/sec)
          eps_aq_g,          & ! equilibrium fractionation (CO2_gaseous <-> CO2_aq)
          eps_dic_g,         & ! equilibrium fractionation between total DIC and gaseous CO2
          alpha_aq_g,        & ! eps = ( alpha -1 ) * 1000
          alpha_dic_g,       & ! eps = ( alpha -1 ) * 1000
          delta_C13_Corg,    & ! deltaC13 of Net Primary Production
          delta_C13_CO2STAR, & ! deltaC13 of CO2*
-         DO14Ctot_prod,     & ! production of 13C DOCtot (mmol 14C/m^3/sec)
-         DO14Ctot_remin,    & ! remineralization of 13C DOCtot (mmol 14C/m^3/sec)
+         DO14Ctot_prod,     & ! production of 14C DOCtot (mmol 14C/m^3/sec)
+         DO14Ctot_remin,    & ! remineralization of 14C DOCtot (mmol 14C/m^3/sec)
+         DO14C_prod,        & ! production of 14C DOCsl (mmol 14C/m^3/sec)
+         DO14C_remin,       & ! remineralization of 14C DOCsl (mmol 14C/m^3/sec)
+         DO14Cr_prod,       & ! production of 14C DOCr (mmol 14C/m^3/sec)
+         DO14Cr_remin,      & ! remineralization of 14C DOCr (mmol 14C/m^3/sec)
          alpha_aq_g_14c,    & ! alpha for 14C, with fractionation twice as large as for 13C
          alpha_dic_g_14c,   & ! alpha for 14C, with fractionation twice as large as for 13C
          delta_C14_CO2STAR, & ! deltaC14 of CO2*
          DIC_d13C,          & ! d13C of DIC
          DOCtot_d13C,       & ! d13C of DOCtot
+         DOC_d13C,          & ! d13C of DOCsl
+         DOCr_d13C,         & ! d13C of DOCr
          zoototC_d13C,      & ! d13C of zoototC
          DIC_d14C,          & ! d14C of DIC
          DOCtot_d14C,       & ! d14C of DOCtot
+         DOC_d14C,        & ! d14C of DOCsl
+         DOCr_d14C,         & ! d14C of DOCr
          zoototC_d14C,      & ! d14C of zoototC
          decay_14Ctot         ! 14C decay loss term
 
@@ -184,8 +200,14 @@ contains
          DOCtot_remin       => interior_tendency_share%DOCtot_remin_fields,  & ! INPUT remineralization of DOCtot (mmol C/m^3/sec)
          DOCtot_loc         => interior_tendency_share%DOCtot_loc_fields,    & ! INPUT local copy of model DOCtot
 
+         DOC_loc            => tracer_local(marbl_tracer_indices%DOC_ind,:),       & ! local copy of model DOC
+         DOCr_loc           => tracer_local(marbl_tracer_indices%DOCr_ind,:),      & ! local copy of model DOCr
          DO13Ctot_loc       => tracer_local(marbl_tracer_indices%DO13Ctot_ind,:),  & ! local copy of model DO13Ctot
+         DO13C_loc          => tracer_local(marbl_tracer_indices%DO13C_ind,:),     & ! local copy of model DO13Csl
+         DO13Cr_loc         => tracer_local(marbl_tracer_indices%DO13Cr_ind,:),    & ! local copy of model DO13Cr
          DO14Ctot_loc       => tracer_local(marbl_tracer_indices%DO14Ctot_ind,:),  & ! local copy of model DO14Ctot
+         DO14C_loc          => tracer_local(marbl_tracer_indices%DO14C_ind,:),     & ! local copy of model DO14Csl
+         DO14Cr_loc         => tracer_local(marbl_tracer_indices%DO14Cr_ind,:),    & ! local copy of model DO14Cr
          DIC_loc            => tracer_local(marbl_tracer_indices%DIC_ind,:),       & ! INPUT local copy of model DIC
          DI13C_loc          => tracer_local(marbl_tracer_indices%DI13C_ind,:),     & ! local copy of model DI13C
          DI14C_loc          => tracer_local(marbl_tracer_indices%DI14C_ind,:),     & ! local copy of model DI14C
@@ -207,6 +229,9 @@ contains
          CaCO3_form         => autotroph_derived_terms%CaCO3_form,     & ! INPUT prod. of CaCO3 by small phyto (mmol CaCO3/m^3/sec)
          PCphoto            => autotroph_derived_terms%PCphoto,        & ! INPUT C-specific rate of photosynth. (1/sec)
 
+         DOC_remin          => dissolved_organic_matter%DOC_remin,     & ! INPUT DOC_remin rate (mmol C/m^3/sec)
+         DOCr_remin         => dissolved_organic_matter%DOCr_remin,    & ! INPUT DOCr_remin rate (mmol C/m^3/sec)
+
          zoototC_loc        => zooplankton_share%zoototC_loc_fields(:),      & ! INPUT local copy of model zoototC
          zootot_loss        => zooplankton_share%zootot_loss_fields(:),      & ! INPUT mortality & higher trophic grazing on zooplankton (mmol C/m^3/sec)
          zootot_loss_poc    => zooplankton_share%zootot_loss_poc_fields(:),  & ! INPUT zootot_loss routed to large detrital pool (mmol C/m^3/sec)
@@ -223,9 +248,13 @@ contains
 
          di13c_ind          => marbl_tracer_indices%di13c_ind,     &
          do13ctot_ind       => marbl_tracer_indices%do13ctot_ind,  &
+         do13c_ind          => marbl_tracer_indices%do13c_ind,     &
+         do13cr_ind         => marbl_tracer_indices%do13r_ind,     &
          zootot13C_ind      => marbl_tracer_indices%zootot13C_ind, &
          di14c_ind          => marbl_tracer_indices%di14c_ind,     &
          do14ctot_ind       => marbl_tracer_indices%do14ctot_ind,  &
+         do14c_ind          => marbl_tracer_indices%do14c_ind,     &
+         do14cr_ind         => marbl_tracer_indices%do14cr_ind,    &
          zootot14C_ind      => marbl_tracer_indices%zootot14C_ind  &
          )
 
@@ -278,10 +307,18 @@ contains
 
        if (DOCtot_loc(k) > c0) then
           R13C_DOCtot(k) = DO13Ctot_loc(k) / DOCtot_loc(k)
+          R13C_DOC(k)    = DO13C_loc(k)    / DOC_loc(k)
+          R13C_DOCr(k)   = DO13Cr_loc(k)   / DOCr_loc(k)
           R14C_DOCtot(k) = DO14Ctot_loc(k) / DOCtot_loc(k)
+          R14C_DOC(k)    = DO14C_loc(k)    / DOC_loc(k)
+          R14C_DOCr(k)   = DO14Cr_loc(k)   / DOCr_loc(k)
        else
           R13C_DOCtot(k) = c0
+          R13C_DOC(k)    = c0
+          R13C_DOCr(k)   = c0
           R14C_DOCtot(k) = c0
+          R14C_DOC(k)    = c0
+          R14C_DOCr(k)   = c0
        end if
 
        if (DIC_loc(k) > c0) then
@@ -323,7 +360,7 @@ contains
        end do
 
        !-----------------------------------------------------------------------
-       !   discrimination factors of carbone chemistry based on
+       !   discrimination factors of carbon chemistry based on
        !   Zhang et al, 1995, Geochim. et Cosmochim. Acta, 59 (1), 107-114
        !
        !   eps = permil fractionation and alpha is the fractionation factor
@@ -488,19 +525,40 @@ contains
        end do ! end loop over auto_ind
 
        !-----------------------------------------------------------------------
-       !  compute terms for DO13Ctot and DO14Ctot
+       !  compute terms for DO13Ctot and DO14Ctot and DO13C DO13Cr and DO14C DO14Cr
        !-----------------------------------------------------------------------
 
        DO13Ctot_prod(k) = &
             (zootot_loss_doc(k) + zootot_graze_doc(k))*R13C_zoototC(k) + &
             sum((auto_loss_doc(:,k) + auto_graze_doc(:,k)) * R13C_autotroph(:,k),dim=1)
 
+       DO13C_prod(k)    = (c1 - DOCprod_refract) * ( &
+            (zootot_loss_doc(k) + zootot_graze_doc(k))*R13C_zoototC(k) + &
+            sum((auto_loss_doc(:,k) + auto_graze_doc(:,k)) * R13C_autotroph(:,k),dim=1))
+
+       DO13Cr_prod(k)   = DOCprod_refract * ( &
+            (zootot_loss_doc(k) + zootot_graze_doc(k))*R13C_zoototC(k) + &
+            sum((auto_loss_doc(:,k) + auto_graze_doc(:,k)) * R13C_autotroph(:,k),dim=1))
+
        DO14Ctot_prod(k) = &
             (zootot_loss_doc(k) + zootot_graze_doc(k))*R14C_zoototC(k) + &
             sum((auto_loss_doc(:,k) + auto_graze_doc(:,k)) * R14C_autotroph(:,k),dim=1)
 
+       DO14C_prod(k)    = (c1 - DOCprod_refract) * ( &
+            (zootot_loss_doc(k) + zootot_graze_doc(k))*R14C_zoototC(k) + &
+            sum((auto_loss_doc(:,k) + auto_graze_doc(:,k)) * R14C_autotroph(:,k),dim=1))
+
+       DO14Cr_prod(k)   =        DOCprod_refract * ( &
+            (zootot_loss_doc(k) + zootot_graze_doc(k))*R14C_zoototC(k) + &
+            sum((auto_loss_doc(:,k) + auto_graze_doc(:,k)) * R14C_autotroph(:,k),dim=1))
+
+
        DO13Ctot_remin(k) = DOCtot_remin(k) * R13C_DOCtot(k)
+       DO13C_remin(k)    = DOC_remin(k)    * R13C_DOC(k)
+       DO13Cr_remin(k)   = DOCr_remin(k)   * R13C_DOCr(k)
        DO14Ctot_remin(k) = DOCtot_remin(k) * R14C_DOCtot(k)
+       DO14C_remin(k)    = DOC_remin(k)    * R14C_DOC(k)
+       DO14Cr_remin(k)   = DOCr_remin(k)   * R14C_DOCr(k)
 
        !-----------------------------------------------------------------------
        !  large detritus 13C and 14C
@@ -533,7 +591,11 @@ contains
        DIC_d14C(k) =  ( R14C_DIC(k) / R14C_std - c1 ) * c1000
 
        DOCtot_d13C(k) =  ( R13C_DOCtot(k) / R13C_std - c1 ) * c1000
+       DOC_d13C(k)    =  ( R13C_DOC(k)    / R13C_std - c1 ) * c1000
+       DOCr_d13C(k)   =  ( R13C_DOCr(k)   / R13C_std - c1 ) * c1000
        DOCtot_d14C(k) =  ( R14C_DOCtot(k) / R14C_std - c1 ) * c1000
+       DOC_d14C(k)    =  ( R14C_DOC(k)    / R14C_std - c1 ) * c1000
+       DOCr_d14C(k)   =  ( R14C_DOCr(k)   / R14C_std - c1 ) * c1000
 
        zoototC_d13C(k)=  ( R13C_zoototC(k) / R13C_std - c1 ) * c1000
        zoototC_d14C(k)=  ( R14C_zoototC(k) / R14C_std - c1 ) * c1000
@@ -621,7 +683,15 @@ contains
 
        interior_tendencies(do13ctot_ind,k) = DO13Ctot_prod(k) - DO13Ctot_remin(k)
 
+       interior_tendencies(do13c_ind,k)    = DO13C_prod(k) - DO13C_remin(k)
+
+       interior_tendencies(do13cr_ind,k)   = DO13Cr_prod(k) - DO13Cr_remin(k)
+
        interior_tendencies(do14ctot_ind,k) = DO14Ctot_prod(k) - DO14Ctot_remin(k) - c14_lambda_inv_sec * DO14Ctot_loc(k)
+
+       interior_tendencies(do14c_ind,k)    = DO14C_prod(k) - DO14C_remin(k) - c14_lambda_inv_sec * DO14C_loc(k)
+
+       interior_tendencies(do14cr_ind,k)   = DO14Cr_prod(k) - DO14Cr_remin(k) - c14_lambda_inv_sec * DO14Cr_loc(k)
 
        decay_14Ctot(k) = decay_14Ctot(k) + c14_lambda_inv_sec * DO14Ctot_loc(k)
 
@@ -632,14 +702,14 @@ contains
        interior_tendencies(di13c_ind,k) = &
             sum((auto_loss_dic(:,k) + auto_graze_dic(:,k))*R13C_autotroph(:,k),dim=1) &
           - sum(photo13C(:,k),dim=1) &
-          + DO13Ctot_remin(k) + PO13C%remin(k) &
+          + DO13C_remin(k) + DO13Cr_remin(k) + PO13C%remin(k) &
           + (zootot_loss_dic(k) + zootot_graze_dic(k)) * R13C_zoototC(k) &
           + P_Ca13CO3%remin(k)
 
        interior_tendencies(di14c_ind,k) = &
             sum((auto_loss_dic(:,k) + auto_graze_dic(:,k))*R14C_autotroph(:,k),dim=1) &
           - sum(photo14C(:,k),dim=1) &
-          + DO14Ctot_remin(k) + PO14C%remin(k) &
+          + DO14C_remin(k) + DO14Cr_remin(k) + PO14C%remin(k) &
           + (zootot_loss_dic(k) + zootot_graze_dic(k)) * R14C_zoototC(k) &
           + P_Ca14CO3%remin(k) &
           - c14_lambda_inv_sec * DI14C_loc(k)
@@ -693,13 +763,25 @@ contains
        DIC_d13C,            &
        DIC_d14C,            &
        DOCtot_d13C,         &
+       DOC_d13C,            &
+       DOCr_d13C,           &
        DOCtot_d14C,         &
+       DOC_d14C,            &
+       DOCr_d14C,           &
        zoototC_d13C,        &
        zoototC_d14C,        &
        DO13Ctot_prod,       &
+       DO13C_prod,          &
+       DO13Cr_prod,         &
        DO14Ctot_prod,       &
+       DO14C_prod,          &
+       DO14Cr_prod,         &
        DO13Ctot_remin,      &
+       DO13C_remin,         &
+       DO13Cr_remin,        &
        DO14Ctot_remin,      &
+       DO14C_remin,         &
+       DO14Cr_remin,        &
        eps_aq_g,            &
        eps_dic_g,           &
        decay_14Ctot,        &
