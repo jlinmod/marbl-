@@ -255,7 +255,7 @@ contains
          di13c_ind          => marbl_tracer_indices%di13c_ind,     &
          do13ctot_ind       => marbl_tracer_indices%do13ctot_ind,  &
          do13c_ind          => marbl_tracer_indices%do13c_ind,     &
-         do13cr_ind         => marbl_tracer_indices%do13r_ind,     &
+         do13cr_ind         => marbl_tracer_indices%do13cr_ind,     &
          zootot13C_ind      => marbl_tracer_indices%zootot13C_ind, &
          di14c_ind          => marbl_tracer_indices%di14c_ind,     &
          do14ctot_ind       => marbl_tracer_indices%do14ctot_ind,  &
