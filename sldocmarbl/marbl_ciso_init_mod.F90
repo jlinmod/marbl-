@@ -39,9 +39,13 @@ contains
 
     associate(di13c_ind         => marbl_tracer_indices%di13c_ind,            &
               do13ctot_ind      => marbl_tracer_indices%do13ctot_ind,         &
+              do13c_ind         => marbl_tracer_indices%do13c_ind,            &
+              do13cr_ind        => marbl_tracer_indices%do13cr_ind,           &
               zootot13C_ind     => marbl_tracer_indices%zootot13C_ind,        &
               di14c_ind         => marbl_tracer_indices%di14c_ind,            &
               do14ctot_ind      => marbl_tracer_indices%do14ctot_ind,         &
+              do14c_ind         => marbl_tracer_indices%do14c_ind,            &
+              do14cr_ind        => marbl_tracer_indices%do14cr_ind,           &
               zootot14C_ind     => marbl_tracer_indices%zootot14C_ind,        &
               ciso_ind_beg      => marbl_tracer_indices%ciso%ind_beg,         &
               ciso_ind_end      => marbl_tracer_indices%ciso%ind_end          &
@@ -61,6 +65,12 @@ contains
     marbl_tracer_metadata(do13ctot_ind)%short_name='DO13Ctot'
     marbl_tracer_metadata(do13ctot_ind)%long_name='Dissolved Organic Carbon-13 (semi-labile+refractory)'
 
+    marbl_tracer_metadata(do13c_ind)%short_name='DO13C'
+    marbl_tracer_metadata(do13c_ind)%long_name='Dissolved Organic Carbon-13 (semi-labile)'
+
+    marbl_tracer_metadata(do13cr_ind)%short_name='DO13Cr'
+    marbl_tracer_metadata(do13cr_ind)%long_name='Dissolved Organic Carbon-13 (refractory)'
+
     marbl_tracer_metadata(zootot13C_ind)%short_name='zootot13C'
     marbl_tracer_metadata(zootot13C_ind)%long_name='Zooplankton Carbon-13 (sum over all zooplankton)'
 
@@ -69,6 +79,12 @@ contains
 
     marbl_tracer_metadata(do14ctot_ind)%short_name='DO14Ctot'
     marbl_tracer_metadata(do14ctot_ind)%long_name='Dissolved Organic Carbon-14 (semi-labile+refractory)'
+
+    marbl_tracer_metadata(do14c_ind)%short_name='DO14C'
+    marbl_tracer_metadata(do14c_ind)%long_name='Dissolved Organic Carbon-14 (semi-labile)'
+
+    marbl_tracer_metadata(do14cr_ind)%short_name='DO14Cr'
+    marbl_tracer_metadata(do14cr_ind)%long_name='Dissolved Organic Carbon-14 (refractory)'
 
     marbl_tracer_metadata(zootot14C_ind)%short_name='zootot14C'
     marbl_tracer_metadata(zootot14C_ind)%long_name='Zooplankton Carbon-14 (sum over all zooplankton)'
