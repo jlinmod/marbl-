@@ -463,7 +463,8 @@ contains
          marbl_tracer_indices    = marbl_tracer_indices,        &
          interior_tendencies     = interior_tendencies,         &
          marbl_interior_diags    = interior_tendency_diags,     &
-         marbl_status_log        = marbl_status_log)
+         marbl_status_log        = marbl_status_log,            &
+         dissolved_organic_matter = dissolved_organic_matter)
 
     if (marbl_status_log%labort_marbl) then
        call marbl_status_log%log_error_trace(&
@@ -2125,9 +2126,9 @@ contains
           do subcol_ind = 1, PAR_nsubcols
             if ((PAR_col_frac(subcol_ind) > c0) .and. (PAR_in(subcol_ind) > 1.0_r8)) then
               work = PAR_col_frac(subcol_ind) * (log(PAR_in(subcol_ind))*0.4373_r8) * (10.0e2_r8/dz1)
-              DOCr_reminR = DOCr_reminR + work * DOMr_reminR_photo
-              DONr_reminR = DONr_reminR + work * DOMr_reminR_photo
-              DOPr_reminR = DOPr_reminR + work * DOMr_reminR_photo
+              DOCr_reminR = DOCr_reminR 
+              DONr_reminR = DONr_reminR 
+              DOPr_reminR = DOPr_reminR 
             endif
           end do
         endif
